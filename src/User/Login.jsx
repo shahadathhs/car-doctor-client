@@ -5,7 +5,7 @@ import useAuth from './../hooks/useAuth';
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import loginLottie from "../assets/lottie/login.json";
-import axios from "axios";
+//import axios from "axios";
 
 const Login = () => {
   const { login, googleLogin, githubLogin, twitterLogin } = useAuth();
@@ -21,7 +21,6 @@ const Login = () => {
   const handleSocialLogin = (socialProvider) => {
     socialProvider()
       .then((result) => {
-        
         Swal.fire({
           title: 'Successful!',
           text: 'You Login Successful',
@@ -29,23 +28,22 @@ const Login = () => {
           confirmButtonText: 'Cool'
         })
         // loggedIn User
-        console.log(result.user);
-        
-        // if (result.user) {
-        //   navigate(from);
-        // }
+        //console.log(result.user);
+        if (result.user) {
+          navigate(from);
+        }
 
-        const userEmail = { email: result.user.email }
-        // get access token
-        axios.post("http://localhost:5000/jwt", userEmail, {
-          withCredentials: true
-        })
-          .then(res => {
-            console.log(res.data)
-            if (res.data.success) {
-              navigate(from);
-            }
-        })
+        // const userEmail = { email: result.user.email }
+        // // get access token
+        // axios.post("http://localhost:5000/jwt", userEmail, {
+        //   withCredentials: true
+        // })
+        //   .then(res => {
+        //     console.log(res.data)
+        //     if (res.data.success) {
+        //       navigate(from);
+        //     }
+        // })
       })
       .catch((error) => {
         Swal.fire({
@@ -69,46 +67,46 @@ const Login = () => {
     
     setLoginError("");
 
-      login(email, password)
-        .then((result) => {
-          
-          Swal.fire({
-            title: 'Successful!',
-            text: 'You Login Successful',
-            icon: 'success',
-            confirmButtonText: 'Cool'
-          })
-
-          // loggedIn User
-          console.log(result.user)
-
-          // if (result.user) {
-          //   navigate(from);
-          // }
-          
-          //const user = { email}
-          const userEmail = {email : result.user.email}
-          // get access token
-          axios.post("http://localhost:5000/jwt", userEmail, {
-            withCredentials: true
-          })
-            .then(res => {
-              console.log(res.data)
-              if (res.data.success) {
-                navigate(from);
-              }
-            })
+    login(email, password)
+      .then((result) => {
         
-          })
-        .catch((error)=> {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Password or Email did not match!',
-            icon: 'error',
-            confirmButtonText: 'Try Again'
-          })
-          setLoginError(error.message);
+        Swal.fire({
+          title: 'Successful!',
+          text: 'You Login Successful',
+          icon: 'success',
+          confirmButtonText: 'Cool'
         })
+        
+        // loggedIn User
+        //console.log(result.user)
+        
+        if (result.user) {
+          navigate(from);
+        }
+          
+          // //const user = { email}
+          // const userEmail = {email : result.user.email}
+          // // get access token
+          // axios.post("http://localhost:5000/jwt", userEmail, {
+          //   withCredentials: true
+          // })
+          //   .then(res => {
+          //     console.log(res.data)
+          //     if (res.data.success) {
+          //       navigate(from);
+          //     }
+          //   })
+        
+      })
+      .catch((error)=> {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Password or Email did not match!',
+          icon: 'error',
+          confirmButtonText: 'Try Again'
+        })
+        setLoginError(error.message);
+      })
   };
 
   return (

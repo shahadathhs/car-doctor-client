@@ -6,24 +6,34 @@ import { MdDeleteForever, MdPending } from "react-icons/md";
 import useAuth from './../hooks/useAuth';
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import axios from "axios";
+//import axios from "axios";
+import useAxiosSecure from './../hooks/useAxiosSecure';
 
 const Cart = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const [carts, setCarts] = useState([]);
 
-  const url = `http://localhost:5000/checkOut?email=${user.email}`
+  //const url = `http://localhost:5000/checkOut?email=${user.email}`
+  const url = `/checkOut?email=${user.email}`
 
   useEffect(()=> {
     // fetch(url)
     //   .then(res => res.json())
     //   .then(data => setCarts(data))
-    axios.get(url, {withCredentials: true})
+    
+    // axios.get(url, {withCredentials: true})
+    //   .then(res => {
+    //     setCarts(res.data)
+    //   })
+
+    axiosSecure.get(url)
       .then(res => {
-        setCarts(res.data)
+          setCarts(res.data)
       })
-  }, [url])
+
+  }, [url, axiosSecure])
 
   const handleCartDelete = id => {
     Swal.fire({

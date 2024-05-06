@@ -1,11 +1,13 @@
 //import { useLoaderData } from "react-router-dom";
 //import PropTypes from 'prop-types';
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { BiDetail } from "react-icons/bi";
+import useServices from "../../hooks/useServices";
 
 const Services = () => {
+  //DRY => DO Not Repeat Yourself
 
   //const Services = ({services}) => {
   //console.log(services) // services does not load in services route from navbar
@@ -28,13 +30,14 @@ const Services = () => {
   //here services2 & services3 are same => load both in home page and service page
 
   //database
-  const [services4, setServices4] = useState([])
+  // const [services4, setServices4] = useState([])
 
-  useEffect(() => {
-    fetch("http://localhost:5000/services")
-     .then(res => res.json())
-     .then(data => setServices4(data))
-  } ,[])
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/services")
+  //    .then(res => res.json())
+  //    .then(data => setServices4(data))
+  // } ,[])
+  const services = useServices();
   
   return (
     <div>
@@ -51,7 +54,7 @@ const Services = () => {
       {/* cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {
-          services4.map(service => 
+          services.map(service => 
             <div key={service._id}
               className="max-w-xs p-6 rounded-md shadow-md mx-auto dark:bg-gray-900 dark:text-gray-50">
               <img src={service.img} alt="" className="object-cover object-center w-full rounded-md h-72 dark:bg-gray-500" />
